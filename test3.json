@@ -1,0 +1,18 @@
+[
+  {
+    "Q":1,
+    "question": "What is the significance of the Industrial Revolution in shaping modern society?",
+    "model_answer": "The Industrial Revolution started in the late 1700s and changed economies from farming to industry. It introduced new machines, steam power, and factories. It led to mass production, urbanization, and advancements in transport and communication. However, it also caused poor working conditions, child labor, and pollution. This period shaped modern society and economies.",
+    "student_answer": "The Industrial Revolution, which began in the late 18th century, marked a major turning point in human history by transforming economies from agrarian-based to industrialized ones. It was characterized by the development of new machinery, the use of steam power, and the establishment of factories. This revolution led to significant advancements in manufacturing, transportation, and communication. The rise of factories facilitated mass production, leading to urbanization as people moved to cities in search of work. However, it also brought about social challenges, such as poor working conditions, child labor, and environmental pollution. The Industrial Revolution was instrumental in shaping modern economies, fostering technological innovations, and influencing social, political, and cultural changes that continue to impact society today.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  },
+  {
+    "Q": 11,
+    "question": "Explain the process of photosynthesis in detail.",
+    "model_answer": "Photosynthesis is a biochemical process used by plants, algae, and certain bacteria to convert light energy into chemical energy stored in glucose. It occurs mainly in the chloroplasts of plant cells, where chlorophyll absorbs light energy, typically from the sun. The process consists of two main stages: the light-dependent reactions and the light-independent reactions (Calvin cycle). In the light-dependent reactions, sunlight is absorbed by chlorophyll, which splits water molecules into oxygen, protons, and electrons, generating ATP and NADPH. In the Calvin cycle, ATP and NADPH are used to convert carbon dioxide from the atmosphere into glucose, which provides energy for the plant's growth and development. The overall equation for photosynthesis is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂.",
+    "student_answer": "Photosynthesis is when plants use sunlight to make food. They take in carbon dioxide and water, and with the help of sunlight, turn them into glucose and oxygen. This happens in the chloroplasts of plant cells. There are two parts: the light-dependent part and the Calvin cycle. In the first part, light is absorbed by chlorophyll and it splits water into oxygen. In the second part, plants use the energy to make glucose from carbon dioxide.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  }
+]

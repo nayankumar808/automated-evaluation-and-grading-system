@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Graded Results</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #eef2f7;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #444;
+        }
+        .container {
+            width: 95%;
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .result-item {
+            background: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            transition: transform 0.2s;
+        }
+        .result-item:hover {
+            transform: translateY(-3px);
+        }
+        .result-item h2 {
+            margin-top: 0;
+            font-size: 1.3em;
+            color: #007BFF;
+        }
+        .result-detail {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+        .result-detail strong {
+            display: inline-block;
+            width: 140px;
+            color: #333;
+        }
+        .download-btn {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .download-btn:hover {
+            background-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Graded Results</h1>
+        {% for item in graded_data %}
+            <div class="result-item">
+                <h2>Question {{ item.Q }}: {{ item.question }}</h2>
+                <p class="result-detail"><strong>Student Answer:</strong> {{ item.student_answer }}</p>
+                <p class="result-detail"><strong>Expected Answer:</strong> {{ item.model_answer }}</p>
+                <p class="result-detail"><strong>Marks:</strong> {{ item.score }}</p>
+                <p class="result-detail"><strong>Feedback:</strong> {{ item.feedback }}</p>
+            </div>
+        {% endfor %}
+        <a href="/download_grade" class="download-btn">Download Graded JSON</a>
+    </div>
+</body>
+</html>

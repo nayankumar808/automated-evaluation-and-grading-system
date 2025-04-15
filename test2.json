@@ -1,0 +1,122 @@
+[
+  {
+    "Q": 1,
+    "question": "What is the capital of France?",
+    "model_answer": "The capital of France is Paris.",
+    "student_answer": "The capital of France is Paris.",
+    "question_type": "one_word",
+    "allotted_marks": 1
+  },
+  {
+    "Q": 2,
+    "question": "What is the largest planet in our solar system?",
+    "model_answer": "The largest planet in our solar system is Jupiter.",
+    "student_answer": "The largest planet in our solar system is Jupiter.",
+    "question_type": "one_word",
+    "allotted_marks": 1
+  },
+  {
+    "Q": 3,
+    "question": "What is the chemical symbol for water?",
+    "model_answer": "The chemical symbol for water is H₂O.",
+    "student_answer": "The chemical symbol for water is H₂O.",
+    "question_type": "one_word",
+    "allotted_marks": 1
+  },
+  {
+    "Q": 4,
+    "question": "Who wrote the play 'Romeo and Juliet'?",
+    "model_answer": "The play 'Romeo and Juliet' was written by William Shakespeare.",
+    "student_answer": "The play 'Romeo and Juliet' was written by William Shakespeare.",
+    "question_type": "one_word",
+    "allotted_marks": 1
+  },
+  {
+    "Q": 5,
+    "question": "What is the smallest unit of matter?",
+    "model_answer": "The smallest unit of matter is an atom.",
+    "student_answer": "The smallest unit of matter is an atom.",
+    "question_type": "one_word",
+    "allotted_marks": 1
+  },
+  {
+    "Q": 6,
+    "question": "What is gravity?",
+    "model_answer": "Gravity is the force that attracts objects towards the center of the Earth or any other physical body having mass.",
+    "student_answer": "Gravity is the force that pulls objects towards the Earth.",
+    "question_type": "short_answer",
+    "allotted_marks": 5
+  },
+  {
+    "Q": 7,
+    "question": "What is the water cycle?",
+    "model_answer": "The water cycle is the continuous process by which water moves through the atmosphere, oceans, and land, including evaporation, condensation, and precipitation.",
+    "student_answer": "The water cycle is when water moves through the air, land, and oceans.",
+    "question_type": "short_answer",
+    "allotted_marks": 5
+  },
+  {
+    "Q": 8,
+    "question": "What is the capital of the United States?",
+    "model_answer": "The capital of the United States is Washington, D.C.",
+    "student_answer": "Washington, D.C.",
+    "question_type": "short_answer",
+    "allotted_marks": 5
+  },
+  {
+    "Q": 9,
+    "question": "What is the main function of the heart?",
+    "model_answer": "The main function of the heart is to pump blood throughout the body, delivering oxygen and nutrients to cells.",
+    "student_answer": "The heart pumps blood to deliver oxygen and nutrients to the body.",
+    "question_type": "short_answer",
+    "allotted_marks": 5
+  },
+  {
+    "Q": 10,
+    "question": "What is photosynthesis?",
+    "model_answer": "Photosynthesis is the process by which plants convert light energy into chemical energy, producing glucose and oxygen from carbon dioxide and water.",
+    "student_answer": "Photosynthesis is when plants make food using sunlight and release oxygen.",
+    "question_type": "short_answer",
+    "allotted_marks": 5
+  },
+  {
+    "Q": 11,
+    "question": "Explain the process of photosynthesis in detail.",
+    "model_answer": "Photosynthesis is a biochemical process used by plants, algae, and certain bacteria to convert light energy into chemical energy stored in glucose. It occurs mainly in the chloroplasts of plant cells, where chlorophyll absorbs light energy, typically from the sun. The process consists of two main stages: the light-dependent reactions and the light-independent reactions (Calvin cycle). In the light-dependent reactions, sunlight is absorbed by chlorophyll, which splits water molecules into oxygen, protons, and electrons, generating ATP and NADPH. In the Calvin cycle, ATP and NADPH are used to convert carbon dioxide from the atmosphere into glucose, which provides energy for the plant's growth and development. The overall equation for photosynthesis is: 6CO₂ + 6H₂O + light energy → C₆H₁₂O₆ + 6O₂.",
+    "student_answer": "Photosynthesis is when plants use sunlight to make food. They take in carbon dioxide and water, and with the help of sunlight, turn them into glucose and oxygen. This happens in the chloroplasts of plant cells. There are two parts: the light-dependent part and the Calvin cycle. In the first part, light is absorbed by chlorophyll and it splits water into oxygen. In the second part, plants use the energy to make glucose from carbon dioxide.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  },
+  {
+    "Q": 12,
+    "question": "Describe the role of the heart in the circulatory system.",
+    "model_answer": "The heart is the central organ in the circulatory system, responsible for pumping blood throughout the body. It consists of four chambers: two atria (upper chambers) and two ventricles (lower chambers). Oxygen-poor blood from the body enters the right atrium, is pumped into the right ventricle, and then sent to the lungs for oxygenation. Oxygen-rich blood from the lungs enters the left atrium, moves into the left ventricle, and is pumped out through the aorta to the rest of the body. This continuous circulation allows for the delivery of oxygen and nutrients to tissues and the removal of waste products, such as carbon dioxide, from the body. The heart's rhythmic contractions, regulated by electrical signals, maintain this vital process.",
+    "student_answer": "The heart is the main pump in the circulatory system. It has four chambers: two atria and two ventricles. Blood without oxygen enters the right atrium, moves to the right ventricle, and goes to the lungs to get oxygen. Oxygen-rich blood comes back to the left atrium, moves to the left ventricle, and is pumped throughout the body. This helps transport oxygen and nutrients while also removing waste like carbon dioxide.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  },
+  {
+    "Q": 13,
+    "question": "What are the causes and effects of climate change?",
+    "model_answer": "Climate change is primarily caused by human activities that increase the concentration of greenhouse gases in the atmosphere, particularly carbon dioxide (CO₂), methane (CH₄), and nitrous oxide (N₂O). These gases trap heat from the sun, leading to a rise in global temperatures, a phenomenon known as global warming. Major contributors to climate change include the burning of fossil fuels (coal, oil, natural gas) for energy, deforestation, and industrial processes. The effects of climate change are widespread and include rising sea levels due to melting polar ice caps, more frequent and severe weather events (such as hurricanes, droughts, and heatwaves), disruptions to ecosystems, and threats to biodiversity. Additionally, it poses risks to agriculture, human health, and the global economy.",
+    "student_answer": "Climate change is mainly caused by human activities like burning fossil fuels, deforestation, and industrial activities. These release gases like carbon dioxide into the air, which trap heat and cause the Earth to warm. The effects include rising sea levels, stronger storms, droughts, and changes to ecosystems. This also affects agriculture, human health, and economies.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  },
+  {
+    "Q": 14,
+    "question": "Explain the theory of evolution by natural selection.",
+    "model_answer": "The theory of evolution by natural selection, first proposed by Charles Darwin, explains how species evolve and adapt over time through the differential survival and reproduction of organisms with advantageous traits. In any given environment, organisms exhibit variation in traits, such as size, color, or behavior. These traits are often inherited by offspring. Those with traits that better suit their environment are more likely to survive, reproduce, and pass these traits on to the next generation. Over time, this process leads to the gradual accumulation of beneficial traits in the population, while less advantageous traits become less common. Natural selection is one of the key mechanisms of evolution, driving the diversity of life on Earth.",
+    "student_answer": "Charles Darwin's theory of evolution by natural selection says that animals with traits that help them survive in their environment are more likely to live and have babies. These traits are passed to the next generation. Over time, helpful traits become common, and harmful traits disappear. This process explains how species change and adapt.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  },
+  {
+    "Q": 15,
+    "question": "What is the significance of the Industrial Revolution in shaping modern society?",
+    "model_answer": "The Industrial Revolution started in the late 1700s and changed economies from farming to industry. It introduced new machines, steam power, and factories. It led to mass production, urbanization, and advancements in transport and communication. However, it also caused poor working conditions, child labor, and pollution. This period shaped modern society and economies.",
+    "student_answer": "The Industrial Revolution, which began in the late 18th century, marked a major turning point in human history by transforming economies from agrarian-based to industrialized ones. It was characterized by the development of new machinery, the use of steam power, and the establishment of factories. This revolution led to significant advancements in manufacturing, transportation, and communication. The rise of factories facilitated mass production, leading to urbanization as people moved to cities in search of work. However, it also brought about social challenges, such as poor working conditions, child labor, and environmental pollution. The Industrial Revolution was instrumental in shaping modern economies, fostering technological innovations, and influencing social, political, and cultural changes that continue to impact society today.",
+    "question_type": "brief_answer",
+    "allotted_marks": 10
+  }
+]

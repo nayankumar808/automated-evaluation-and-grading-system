@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>OCR and Grading Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+            z-index: 1;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #444;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        hr {
+            margin: 30px 0;
+        }
+        .download-btn {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .download-btn:hover {
+            background-color: #1e7e34;
+        }
+        /* Loading spinner styling */
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        #loading-spinner {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #007BFF;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Image preview styling */
+        #previewContainer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        #imagePreview {
+            display: none;
+            max-width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 5px;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-overlay">
+        <div id="loading-spinner"></div>
+    </div>
+    <div class="container">
+        <h1>OCR and Grading Interface</h1>
+
+        <!-- Form for OCR Upload -->
+        <h2>1. Upload Image for OCR</h2>
+        <form id="ocrForm" action="/ocr" method="post" enctype="multipart/form-data">
+            <label>Choose an image:</label>
+            <input type="file" name="image" id="imageInput" accept="image/*" required>
+            
+            <!-- Image Preview Container -->
+            <div id="previewContainer">
+                <img id="imagePreview" src="#" alt="Image Preview" />
+            </div>
+
+            <button type="submit">Run OCR & Download JSON</button>
+        </form>
+
+        <hr>
+
+        <!-- Form for Grading Upload -->
+        <h2>2. Upload JSON for Grading</h2>
+        <form id="gradeForm" action="/grade" method="post" enctype="multipart/form-data">
+            <label>Choose JSON file:</label>
+            <input type="file" name="json_file" accept=".json" required>
+            <button type="submit">Grade Answers</button>
+        </form>
+    </div>
+
+    <script>
+        // When either form is submitted, show the loading overlay.
+        const ocrForm = document.getElementById('ocrForm');
+        const gradeForm = document.getElementById('gradeForm');
+        const loadingOverlay = document.getElementById('loading-overlay');
+
+        function showLoading() {
+            loadingOverlay.style.display = 'block';
+        }
+
+        ocrForm.addEventListener('submit', showLoading);
+        gradeForm.addEventListener('submit', showLoading);
+
+        // Image preview functionality
+        const imageInput = document.getElementById('imageInput');
+        const imagePreview = document.getElementById('imagePreview');
+
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
