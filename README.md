@@ -13,9 +13,13 @@ This project is a web-based OCR (Optical Character Recognition) and grading tool
 1. Clone the repository or download the project files.
 
 2. Create and activate a virtual environment (optional but recommended):
+
    ```bash
    python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
+   # On Windows:
+   venv\Scripts\activate
+   # On macOS/Linux:
+   source venv/bin/activate
 Install the required Python packages:
 
 pip install -r requirements.txt
@@ -32,7 +36,7 @@ Open your web browser and navigate to http://127.0.0.1:5000/.
 
 Upload Image for OCR:
 
-Use the first form to upload an image file containing questions and answers.
+Use the first form on the main page to upload an image file containing questions and answers.
 The app will perform OCR on the image and extract question-answer pairs.
 A JSON file with the extracted data will be downloaded automatically.
 Upload JSON for Grading:
@@ -41,7 +45,6 @@ Use the second form to upload a JSON file (such as the OCR output).
 The app will grade the answers using NLP techniques and the llama3.1 model.
 The grading results will be displayed on the results page.
 You can download the graded results JSON from the results page.
-
 Project Structure
 .
 ├── app.py                  # Main Flask application and logic
@@ -50,7 +53,7 @@ Project Structure
 │   ├── index.html          # Main interface page
 │   ├── results.html        # Grading results page
 │   └── styles.css          # CSS styles for the UI
-├── static/                 # Static assets (if any)
+├── static/                 # Static assets (e.g., CSS, JS, images)
 ├── uploads/                # Folder for uploaded files and outputs
 │   ├── ocr_output.json     # OCR extracted data (generated)
 │   ├── graded_output.json  # Grading results (generated)
@@ -62,6 +65,7 @@ NLTK and scikit-learn are used for text processing and similarity scoring.
 The llama3.1 model from langchain-ollama is used for scoring and feedback generation.
 Ensure your system has a CUDA-enabled GPU for optimal performance with the llama3.1 model.
 Uploaded files are saved in the uploads/ directory.
+NLTK data (stopwords and punkt tokenizer) are downloaded automatically on first run.
 License
 This project is provided as-is without any warranty. Use it at your own risk.
 

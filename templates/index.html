@@ -1,174 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>OCR and Grading Tool</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-            background-color: #fff;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            border-radius: 8px;
-            position: relative;
-            z-index: 1;
-        }
-        h1, h2 {
-            text-align: center;
-            color: #444;
-        }
-        form {
-            margin-bottom: 20px;
-            padding: 10px;
-        }
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-        input[type="file"] {
-            margin-bottom: 10px;
-        }
-        button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        hr {
-            margin: 30px 0;
-        }
-        .download-btn {
-            display: inline-block;
-            background-color: #28a745;
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 4px;
-            text-decoration: none;
-        }
-        .download-btn:hover {
-            background-color: #1e7e34;
-        }
-        /* Loading spinner styling */
-        #loading-overlay {
-            display: none;
-            position: fixed;
-            z-index: 9999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        #loading-spinner {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #007BFF;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR & Grading Tool</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --background: #f5f7fb;
+      --text: #1f2937;
+      --gray: #6b7280;
+      --border: #e5e7eb;
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
 
-        /* Image preview styling */
-        #previewContainer {
-            text-align: center;
-            margin-top: 20px;
-        }
-        #imagePreview {
-            display: none;
-            max-width: 100%;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 5px;
-            background: #f9f9f9;
-        }
-    </style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 40px;
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--text);
+      letter-spacing: -0.025em;
+    }
+
+    .section {
+      background-color: #fafafa;
+      border-radius: 12px;
+      padding: 32px;
+      margin-bottom: 32px;
+      border: 1px solid var(--border);
+    }
+
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--gray);
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      display: block;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .file-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background-color: #fff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .file-input:hover {
+      border-color: #d1d5db;
+    }
+
+    .file-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #fff;
+      width: 100%;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    #previewContainer {
+      margin-top: 20px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    #imagePreview {
+      display: none;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    /* Loading Overlay */
+    #loading-overlay {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+    }
+
+    .loading-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    #loading-spinner {
+      width: 56px;
+      height: 56px;
+      border: 4px solid rgba(79, 70, 229, 0.2);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    .loading-text {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px auto;
+        padding: 24px;
+        border-radius: 12px;
+      }
+      
+      .section {
+        padding: 24px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div id="loading-overlay">
-        <div id="loading-spinner"></div>
+
+  <div id="loading-overlay">
+    <div class="loading-content">
+      <div id="loading-spinner"></div>
+      <p class="loading-text">Processing...</p>
     </div>
-    <div class="container">
-        <h1>OCR and Grading Interface</h1>
+  </div>
 
-        <!-- Form for OCR Upload -->
-        <h2>1. Upload Image for OCR</h2>
-        <form id="ocrForm" action="/ocr" method="post" enctype="multipart/form-data">
-            <label>Choose an image:</label>
-            <input type="file" name="image" id="imageInput" accept="image/*" required>
-            
-            <!-- Image Preview Container -->
-            <div id="previewContainer">
-                <img id="imagePreview" src="#" alt="Image Preview" />
-            </div>
+  <div class="container">
+    <h1>OCR & Grading Tool</h1>
 
-            <button type="submit">Run OCR & Download JSON</button>
-        </form>
-
-        <hr>
-
-        <!-- Form for Grading Upload -->
-        <h2>2. Upload JSON for Grading</h2>
-        <form id="gradeForm" action="/grade" method="post" enctype="multipart/form-data">
-            <label>Choose JSON file:</label>
-            <input type="file" name="json_file" accept=".json" required>
-            <button type="submit">Grade Answers</button>
-        </form>
+    <div class="section">
+      <h2>Upload Image for OCR</h2>
+      <form id="ocrForm" action="/ocr" method="post" enctype="multipart/form-data">
+        <label for="imageInput">Select an image file</label>
+        <div class="file-input-wrapper">
+          <input class="file-input" type="file" name="image" id="imageInput" accept="image/*" required />
+        </div>
+        <div id="previewContainer">
+          <img id="imagePreview" src="#" alt="Image Preview" />
+        </div>
+        <button type="submit">
+          Run OCR & Download JSON
+        </button>
+      </form>
     </div>
 
-    <script>
-        // When either form is submitted, show the loading overlay.
-        const ocrForm = document.getElementById('ocrForm');
-        const gradeForm = document.getElementById('gradeForm');
-        const loadingOverlay = document.getElementById('loading-overlay');
+    <div class="section">
+      <h2>Upload JSON for Grading</h2>
+      <form id="gradeForm" action="/grade" method="post" enctype="multipart/form-data">
+        <label for="jsonFile">Select a JSON file</label>
+        <div class="file-input-wrapper">
+          <input class="file-input" type="file" name="json_file" id="jsonFile" accept=".json" required />
+        </div>
+        <button type="submit">
+          Grade Answers
+        </button>
+      </form>
+    </div>
+  </div>
 
-        function showLoading() {
-            loadingOverlay.style.display = 'block';
-        }
+  <script>
+    const ocrForm = document.getElementById('ocrForm');
+    const gradeForm = document.getElementById('gradeForm');
+    const loadingOverlay = document.getElementById('loading-overlay');
 
-        ocrForm.addEventListener('submit', showLoading);
-        gradeForm.addEventListener('submit', showLoading);
+    function showLoading() {
+      loadingOverlay.style.display = 'block';
+    }
 
-        // Image preview functionality
-        const imageInput = document.getElementById('imageInput');
-        const imagePreview = document.getElementById('imagePreview');
+    ocrForm.addEventListener('submit', showLoading);
+    gradeForm.addEventListener('submit', showLoading);
 
-        imageInput.addEventListener('change', function () {
-            const file = this.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    imagePreview.src = e.target.result;
-                    imagePreview.style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                imagePreview.style.display = 'none';
-            }
-        });
-    </script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        imagePreview.style.display = 'none';
+      }
+    });
+
+    // Hide loader on load just in case
+    window.onload = () => {
+      loadingOverlay.style.display = 'none';
+    };
+  </script>
 </body>
 </html>
