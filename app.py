@@ -10,6 +10,7 @@ from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, request, send_file, render_template, redirect
+from werkzeug.utils import secure_filename
 from langchain_ollama import OllamaLLM
 
 # Initialize logging and download NLTK dependencies
@@ -30,11 +31,10 @@ model = OllamaLLM(model="llama3.1", device="cuda")
 
 # ----------------------- OCR Functions ---------------------------
 def preprocess_image(image_path):
-    """Preprocess the image for OCR."""
     img = cv2.imread(image_path, cv2.IMREAD_COLOR)
     if img is None:
         logging.error(f"Failed to load image: {image_path}")
-        return None  # Prevent crashing if the image isn't readable
+        return None
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     binary = cv2.adaptiveThreshold(
@@ -43,9 +43,10 @@ def preprocess_image(image_path):
     return binary
 
 def perform_ocr(image_folder):
-    """Extract text from images using OCR."""
     ocr_results = []
     for image_file in os.listdir(image_folder):
+        if not image_file.lower().endswith(('.png', '.jpg', '.jpeg')):
+            continue
         image_path = os.path.join(image_folder, image_file)
         preprocessed_img = preprocess_image(image_path)
         if preprocessed_img is None:
@@ -59,13 +60,12 @@ def perform_ocr(image_folder):
     return ocr_results
 
 def extract_questions_and_answers(ocr_text):
-    """Extract Q&A pairs using regex."""
     qa_pairs = []
     pattern = re.compile(r"Q?(\d+)[).]?\s*(.+)", re.IGNORECASE)
     current_question = None
     question_text = ""
     current_answer = []
-    
+
     for line in ocr_text:
         line = line.strip()
         match = pattern.match(line)
@@ -75,7 +75,7 @@ def extract_questions_and_answers(ocr_text):
                     "Q": int(current_question),
                     "question": question_text.strip(),
                     "student_answer": " ".join(current_answer).strip(),
-                    "question_type": "brief_answer"  # Default; adjust if needed
+                    "question_type": "brief_answer"
                 })
             current_question, question_text = match.groups()
             current_answer = []
@@ -126,11 +126,12 @@ def grade_short_answer(model_answer, student_answer):
     student_tokens = [word for word in student_tokens if word not in stop_words]
     vectorizer = CountVectorizer().fit_transform([' '.join(model_tokens), ' '.join(student_tokens)])
     cosine_sim = cosine_similarity(vectorizer[0:1], vectorizer[1:2])[0][0]
-    return round(cosine_sim * 5)  # Scaling to 0-5
+    return round(cosine_sim * 5)
 
 def grade_answers(data):
-    """Grade answers based on question type."""
     output_data = []
+    total_score = 0
+
     for item in data:
         question = item["question"]
         student_answer = item["student_answer"]
@@ -141,8 +142,8 @@ def grade_answers(data):
             prompt = generate_prompt_for_score(question, model_answer, student_answer)
             score_str = model.invoke(prompt).strip()
             try:
-                score = int(score_str)
-            except ValueError:
+                score = int(re.search(r'\d+', score_str).group())
+            except (ValueError, AttributeError):
                 score = 0
             prompt2 = generate_prompt_for_feedback(score, question, model_answer, student_answer)
             feedback = model.invoke(prompt2)
@@ -152,7 +153,9 @@ def grade_answers(data):
         else:
             score = grade_one_word(model_answer, student_answer)
             feedback = "No feedback provided for one-word answers in this version."
-        
+
+        total_score += score
+
         output_data.append({
             "Q": item["Q"],
             "question": question,
@@ -161,7 +164,8 @@ def grade_answers(data):
             "score": score,
             "feedback": feedback
         })
-    return output_data
+
+    return output_data, total_score
 
 # ------------------------ Flask Routes ----------------------------
 @app.route('/')
@@ -172,18 +176,17 @@ def index():
 def ocr_route():
     image_file = request.files['image']
     if image_file:
-        image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_file.filename)
+        filename = secure_filename(image_file.filename)
+        image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         image_file.save(image_path)
-        
-        # Perform OCR
+
         ocr_lines = perform_ocr(app.config['UPLOAD_FOLDER'])
         qa_pairs = extract_questions_and_answers(ocr_lines)
-        
-        # Save OCR output to JSON file for download
+
         ocr_output_path = os.path.join(app.config['UPLOAD_FOLDER'], 'ocr_output.json')
         with open(ocr_output_path, 'w', encoding='utf-8') as f:
             json.dump(qa_pairs, f, indent=4)
-        
+
         return send_file(ocr_output_path, as_attachment=True)
     return redirect('/')
 
@@ -191,19 +194,23 @@ def ocr_route():
 def grade_route():
     json_file = request.files['json_file']
     if json_file:
-        json_path = os.path.join(app.config['UPLOAD_FOLDER'], json_file.filename)
+        filename = secure_filename(json_file.filename)
+        json_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         json_file.save(json_path)
-        
+
         with open(json_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-        
-        graded_data = grade_answers(data)
-        # Save graded output for download
+
+        graded_data, total_score = grade_answers(data)
+
         graded_output_path = os.path.join(app.config['UPLOAD_FOLDER'], 'graded_output.json')
         with open(graded_output_path, 'w', encoding='utf-8') as f:
-            json.dump(graded_data, f, indent=4)
-        
-        return render_template('results.html', graded_data=graded_data)
+            json.dump({
+                "results": graded_data,
+                "total_score": total_score
+            }, f, indent=4)
+
+        return render_template('results.html', graded_data=graded_data, total_score=total_score)
     return redirect('/')
 
 @app.route('/download_grade')
